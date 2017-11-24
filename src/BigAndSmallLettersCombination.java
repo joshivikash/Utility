@@ -1,19 +1,21 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class BigAndSmallLettersCombination {
     public static void main(String[] args) {
-        System.out.println(getListOfBigAndSmallLettersCombinations("AbC"));
+        System.out.println(getListOfBigAndSmallLettersCombinations("Abcd"));
     }
 
-    private static List<String> getListOfBigAndSmallLettersCombinations(String string) {
+    private static Set<String> getListOfBigAndSmallLettersCombinations(String string) {
         List<Integer[]> combinations = new ArrayList<Integer[]>();
         Integer[] inputArr = new Integer[string.length()];
         for (int i = 0; i < inputArr.length; i++) {
             inputArr[i] = i;
         }
         generateDifferentCombinations(inputArr, combinations);
-        List<String> combinationsOfBigAndSmallLetters = new ArrayList<String>();
+        Set<String> combinationsOfBigAndSmallLetters = new HashSet<String>();
         combinations.forEach((arr) -> {
             String s = string.toLowerCase();
             for (int j = 0; j < arr.length; j++) {
@@ -44,9 +46,8 @@ public class BigAndSmallLettersCombination {
                 isRemainingIndexArrEmpty = (isRemainingIndexArrEmpty) ? false : isRemainingIndexArrEmpty;
             }
 
-            // Assigning the last element of indexesArr to "firstIndex",
-            // excluding the case when the length of indexesArr <= 2
-            firstIndex = (firstIndex == -1 && indexesArr.length > 2 && i == (indexesArr.length - 1)) ? i : firstIndex;
+            // Assigning the last element of indexesArr to "firstIndex"
+            firstIndex = (firstIndex == -1 && i == (indexesArr.length - 1)) ? i : firstIndex;
 
             // Populating "remainingIndexesArr" with elements that reside on the
             // LHS
