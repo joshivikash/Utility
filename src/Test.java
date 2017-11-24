@@ -9,19 +9,27 @@ public class Test {
         for (int i = 0; i < inputArr.length; i++) {
             inputArr[i] = i;
         }
+        List<String> combinationsOfBigAndSmallLetters = getListOfBigAndSmallLettersCombinations(string, combinations,
+                inputArr);
+        System.out.println(combinationsOfBigAndSmallLetters);
+    }
+
+    private static List<String> getListOfBigAndSmallLettersCombinations(String string, List<Integer[]> combinations,
+            Integer[] inputArr) {
         generateDifferentCombinations(inputArr, combinations);
+        List<String> combinationsOfBigAndSmallLetters = new ArrayList<String>();
         combinations.forEach((arr) -> {
             String s = string.toLowerCase();
             for (int j = 0; j < arr.length; j++) {
                 int index = arr[j];
                 s = s.replace(s.charAt(index), Character.toUpperCase(s.charAt(index)));
             }
-            System.out.println(s);
+            combinationsOfBigAndSmallLetters.add(s);
         });
-
+        return combinationsOfBigAndSmallLetters;
     }
 
-    private static void generateDifferentCombinations(Integer[] indexesArr, List<Integer[]> ipAddressCombinations) {
+    private static void generateDifferentCombinations(Integer[] indexesArr, List<Integer[]> combinations) {
         // Iterate through the input string index Array
         for (int i = 0; i < indexesArr.length; i++) {
             // For each index get the array of remaining indexes
@@ -42,13 +50,13 @@ public class Test {
                 isRemainingIndexArrEmpty = (isRemainingIndexArrEmpty) ? false : isRemainingIndexArrEmpty;
             }
             if (!isRemainingIndexArrEmpty) {
-                generateDifferentCombinations(remainingIndexes, ipAddressCombinations);
+                generateDifferentCombinations(remainingIndexes, combinations);
             }
             // If it is the last index add all indexes for this string , to the
             // list of
             // other combination string list
             if (i == (indexesArr.length - 1)) {
-                ipAddressCombinations.add(indexesArr);
+                combinations.add(indexesArr);
             }
         }
     }
