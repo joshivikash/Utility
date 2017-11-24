@@ -3,19 +3,15 @@ import java.util.List;
 
 public class Test {
     public static void main(String[] args) {
-        String string = "ABC";
+        System.out.println(getListOfBigAndSmallLettersCombinations("AbC"));
+    }
+
+    private static List<String> getListOfBigAndSmallLettersCombinations(String string) {
         List<Integer[]> combinations = new ArrayList<Integer[]>();
         Integer[] inputArr = new Integer[string.length()];
         for (int i = 0; i < inputArr.length; i++) {
             inputArr[i] = i;
         }
-        List<String> combinationsOfBigAndSmallLetters = getListOfBigAndSmallLettersCombinations(string, combinations,
-                inputArr);
-        System.out.println(combinationsOfBigAndSmallLetters);
-    }
-
-    private static List<String> getListOfBigAndSmallLettersCombinations(String string, List<Integer[]> combinations,
-            Integer[] inputArr) {
         generateDifferentCombinations(inputArr, combinations);
         List<String> combinationsOfBigAndSmallLetters = new ArrayList<String>();
         combinations.forEach((arr) -> {
@@ -26,6 +22,7 @@ public class Test {
             }
             combinationsOfBigAndSmallLetters.add(s);
         });
+        combinationsOfBigAndSmallLetters.add(string.toLowerCase());
         return combinationsOfBigAndSmallLetters;
     }
 
@@ -37,14 +34,17 @@ public class Test {
             int firstIndexInRemainingIndexesArr = -1;
             int index = 0;
             boolean isRemainingIndexArrEmpty = true;
+
             for (int j = i + 1; j < indexesArr.length; j++) {
                 firstIndexInRemainingIndexesArr = (firstIndexInRemainingIndexesArr == -1) ? j
                         : firstIndexInRemainingIndexesArr;
                 remainingIndexes[index++] = indexesArr[j];
                 isRemainingIndexArrEmpty = (isRemainingIndexArrEmpty) ? false : isRemainingIndexArrEmpty;
             }
+
             firstIndexInRemainingIndexesArr = (firstIndexInRemainingIndexesArr == -1 && indexesArr.length > 2
                     && i == (indexesArr.length - 1)) ? i : firstIndexInRemainingIndexesArr;
+
             for (int k = 0; k != i && k < firstIndexInRemainingIndexesArr; k++) {
                 remainingIndexes[index++] = indexesArr[k];
                 isRemainingIndexArrEmpty = (isRemainingIndexArrEmpty) ? false : isRemainingIndexArrEmpty;
