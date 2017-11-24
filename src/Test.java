@@ -27,30 +27,37 @@ public class Test {
     }
 
     private static void generateDifferentCombinations(Integer[] indexesArr, List<Integer[]> combinations) {
-        // Iterate through the input string index Array
+        // Iterate through the Input String's Index Array
         for (int i = 0; i < indexesArr.length; i++) {
-            // For each index get the array of remaining indexes
-            Integer[] remainingIndexes = new Integer[indexesArr.length - 1];
-            int firstIndexInRemainingIndexesArr = -1;
-            int index = 0;
+            // For each index create the array of remaining indexes
+            Integer[] remainingIndexesArr = new Integer[indexesArr.length - 1];
+            int firstIndex = -1;
+            int incrementingIndex = 0;
             boolean isRemainingIndexArrEmpty = true;
 
+            // Populating "remainingIndexesArr" with elements that reside on the
+            // RHS
+            // of ith element of indexesArr
             for (int j = i + 1; j < indexesArr.length; j++) {
-                firstIndexInRemainingIndexesArr = (firstIndexInRemainingIndexesArr == -1) ? j
-                        : firstIndexInRemainingIndexesArr;
-                remainingIndexes[index++] = indexesArr[j];
+                firstIndex = (firstIndex == -1) ? j : firstIndex;
+                remainingIndexesArr[incrementingIndex++] = indexesArr[j];
                 isRemainingIndexArrEmpty = (isRemainingIndexArrEmpty) ? false : isRemainingIndexArrEmpty;
             }
 
-            firstIndexInRemainingIndexesArr = (firstIndexInRemainingIndexesArr == -1 && indexesArr.length > 2
-                    && i == (indexesArr.length - 1)) ? i : firstIndexInRemainingIndexesArr;
+            // Assigning the last element of indexesArr to "firstIndex",
+            // excluding the case when the length of indexesArr <= 2
+            firstIndex = (firstIndex == -1 && indexesArr.length > 2 && i == (indexesArr.length - 1)) ? i : firstIndex;
 
-            for (int k = 0; k != i && k < firstIndexInRemainingIndexesArr; k++) {
-                remainingIndexes[index++] = indexesArr[k];
+            // Populating "remainingIndexesArr" with elements that reside on the
+            // LHS
+            // of ith element of indexesArr
+            for (int k = 0; k != i && k < firstIndex; k++) {
+                remainingIndexesArr[incrementingIndex++] = indexesArr[k];
                 isRemainingIndexArrEmpty = (isRemainingIndexArrEmpty) ? false : isRemainingIndexArrEmpty;
             }
+
             if (!isRemainingIndexArrEmpty) {
-                generateDifferentCombinations(remainingIndexes, combinations);
+                generateDifferentCombinations(remainingIndexesArr, combinations);
             }
             // If it is the last index add all indexes for this string , to the
             // list of
